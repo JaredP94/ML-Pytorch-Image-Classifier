@@ -49,10 +49,15 @@ def main():
     with open('cat_to_name.json', 'r') as f:
         cat_to_name = json.load(f)
 
-    if (in_args.arch == 'squeezenet1_1'):
+    if (in_args.arch.lower() == 'squeezenet1_1'):
         model = models.squeezenet1_1(pretrained=True)
-    elif (in_args.arch == 'resnet18'):
+
+    elif (in_args.arch.lower() == 'resnet18'):
         model = models.resnet18(pretrained=True)
+
+    elif (in_args.arch.lower() == 'alexnet'):
+        model = models.alexnet(pretrained=True)
+
     else:
         print("Invalid arch")
         exit()
@@ -60,16 +65,21 @@ def main():
     for param in model.parameters():
         param.requires_grad = False
 
-    if (in_args.arch == 'squeezenet1_1'):
+    if (in_args.arch.lower() == 'squeezenet1_1'):
         # classifier is already composed of dropout and ReLU activation, so let's resize to our required outputs
         model.classifier[1] = nn.Conv2d(512, len(cat_to_name), kernel_size=(1,1), stride=(1,1))
         model.num_classes = len(cat_to_name)
-    elif (in_args.arch == 'resnet18'):
+
+    elif (in_args.arch.lower() == 'resnet18'):
         model.fc = nn.Sequential(OrderedDict([
                       ('fc1', nn.Linear(model.fc.in_features, in_args.hidden_units)),
                       ('dropout1', nn.Dropout(0.5)),
                       ('relu1', nn.ReLU()),
                       ('fc2', nn.Linear(in_args.hidden_units, len(cat_to_name)))]))
+
+    elif (in_args.arch.lower() == 'alexnet'):
+        model.classifier[6] = nn.Linear(model.classifier[6].in_features, len(cat_to_name))
+        model.num_classes = len(cat_to_name)
 
     params_to_update = []
     for param in model.parameters():

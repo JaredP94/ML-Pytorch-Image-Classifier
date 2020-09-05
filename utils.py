@@ -12,7 +12,7 @@ def get_train_input_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(dest='dir', default='flowers', help='Image folder')
     parser.add_argument('--save_dir', dest='save_dir', default='', help='Save directory for model checkpoint')
-    parser.add_argument('--arch', dest='arch', default='squeezenet1_1', help='Pretrained model architecture [squeezenet1_1 / resnet18]')
+    parser.add_argument('--arch', dest='arch', default='squeezenet1_1', help='Pretrained model architecture [squeezenet1_1 / resnet18 / alexnet]')
     parser.add_argument('--learning_rate', dest='learn_rate', default=0.001, type=float, help='Learning rate for training')
     parser.add_argument('--hidden_units', dest='hidden_units', default=256, type=int, help='Number of hidden units in classifier')
     parser.add_argument('--epochs', dest='epochs', default=10, type=int, help='Number of epochs to train model')
@@ -23,7 +23,7 @@ def get_train_input_args():
 def get_predict_input_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(dest='dir', help='Path to image (e.g. flowers/test/1/image_06743.jpg)')
-    parser.add_argument(dest='checkpoint', help='Name of model checkpoint to load [checkpoint_squeezenet1_1.pth / checkpoint_resnet18.pth]')
+    parser.add_argument(dest='checkpoint', help='Name of model checkpoint to load [checkpoint_squeezenet1_1.pth / checkpoint_resnet18.pth / checkpoint_alexnet]')
     parser.add_argument('--top_k', dest='top_k', default=5, type=int, help='Number of matching classes to return')
     parser.add_argument('--category_names', dest='category_names', default='cat_to_name.json', help='File containing category to name mapping')
     parser.add_argument('--gpu', action='store_true', dest='gpu', default=False, help='Train model using GPU (if available)')
@@ -59,6 +59,10 @@ def load_checkpoint(filepath):
                       ('dropout1', nn.Dropout(0.5)),
                       ('relu1', nn.ReLU()),
                       ('fc2', nn.Linear(checkpoint['hidden_units'], checkpoint['output_size']))]))
+    elif ('alexnet' in filepath):
+        model = models.alexnet(pretrained=True)
+        model.classifier[6] = nn.Linear(model.classifier[6].in_features, checkpoint['output_size'])
+        model.num_classes = checkpoint['output_size']
         
     model.load_state_dict(checkpoint['state_dict'])
     mappings = checkpoint['class_mapping']
