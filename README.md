@@ -11,7 +11,7 @@ This builds off the components demonstrated in the notebook and provides a highl
 
 * Input dataset (directory structure must match)
 * Input class mappings
-* Model architecture (currently ResNet18 and SqueezeNet 1.1 but can be expanded)
+* Model architecture (currently supports AlexNet, ResNet18 and SqueezeNet 1.1 but can be expanded)
 * Number of hidden units in model feed-forward network
 * Learning rate
 * Training epochs
