@@ -1,6 +1,14 @@
 # Developing an Image Classifier with Deep Learning
 This project demonstrates how to make use of pre-trained deep learning models, and then enhancing them with custom feed-forward networks. This is implemented in Python3 using PyTorch, and supports GPU-based training. The project is trained and tested on an image dataset of flowers composed of 102 variants, but the project supports the ability to train a classifier on any image dataset.
 
+## Currently Supported Models:
+A range of pre-trained models are supported, though you can easily add more as required. Currently supported models include:
+
+* AlexNet
+* ResNet18
+* SqueezeNet 1.0
+* SqueezeNet 1.1
+
 ## Project structure
 
 ### 1. Interactive Jupyter Notebook
@@ -11,7 +19,7 @@ This builds off the components demonstrated in the notebook and provides a highl
 
 * Input dataset (directory structure must match)
 * Input class mappings
-* Model architecture (currently supports AlexNet, ResNet18 and SqueezeNet 1.1 but can be expanded)
+* Model architecture
 * Number of hidden units in model feed-forward network
 * Learning rate
 * Training epochs
