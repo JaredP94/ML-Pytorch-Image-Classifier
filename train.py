@@ -52,6 +52,9 @@ def main():
     if (in_args.arch.lower() == 'squeezenet1_1'):
         model = models.squeezenet1_1(pretrained=True)
 
+    elif (in_args.arch.lower() == 'squeezenet1_0'):
+        model = models.squeezenet1_0(pretrained=True)
+
     elif (in_args.arch.lower() == 'resnet18'):
         model = models.resnet18(pretrained=True)
 
@@ -66,6 +69,11 @@ def main():
         param.requires_grad = False
 
     if (in_args.arch.lower() == 'squeezenet1_1'):
+        # classifier is already composed of dropout and ReLU activation, so let's resize to our required outputs
+        model.classifier[1] = nn.Conv2d(512, len(cat_to_name), kernel_size=(1,1), stride=(1,1))
+        model.num_classes = len(cat_to_name)
+
+    elif (in_args.arch.lower() == 'squeezenet1_0'):
         # classifier is already composed of dropout and ReLU activation, so let's resize to our required outputs
         model.classifier[1] = nn.Conv2d(512, len(cat_to_name), kernel_size=(1,1), stride=(1,1))
         model.num_classes = len(cat_to_name)
