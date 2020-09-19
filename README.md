@@ -49,12 +49,14 @@ Basic usage:
 
 Optional arguments:
 
-* ```--save_dir [checkpoint_save_directory]```
-* ```--arch [model_architecture]```
-* ```--learning_rate [optimizer_learn_rate]```
-* ```--hidden_units [features_in_feed_forward_layer]```
-* ```--epochs [training_epochs]```
-* ```--gpu```
+| Argument          |  Default        | Description                                                |
+|-------------------|:---------------:|------------------------------------------------------------|
+| `--save_dir`      |                 | checkpoint save directory                                  |
+| `--arch`          | `squeezenet1_1` | model architecture                                         |
+| `--learning_rate` |       0.001     | optimizer learn rate                                       |
+| `--hidden_units`  |        256      | number of features in feed-forward layer                   |
+| `--epochs`        |        10       | number of training iterations                              |
+| `--gpu`           |                 | use GPU for training model                                 |
 
 Example argument usage:
 
@@ -70,6 +72,12 @@ Optional arguments:
 * ```--top_k [number_of_returned_predictions]```
 * ```--category_names [json_file_of_class_mappings]```
 * ```--gpu```
+
+| Argument           |  Default           | Description                                                |
+|--------------------|:------------------:|------------------------------------------------------------|
+| `--top_k`          |          5         | number of top predictions to return                        |
+| `--category_names` | `cat_to_name.json` | json file of class mappings                                |
+| `--gpu`            |                    | use GPU for training model                                 |
 
 Example argument usage:
 
