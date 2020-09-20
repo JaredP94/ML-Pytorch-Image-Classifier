@@ -69,10 +69,6 @@ Basic usage:
 
 Optional arguments:
 
-* ```--top_k [number_of_returned_predictions]```
-* ```--category_names [json_file_of_class_mappings]```
-* ```--gpu```
-
 | Argument           |  Default           | Description                                                |
 |--------------------|:------------------:|------------------------------------------------------------|
 | `--top_k`          |          5         | number of top predictions to return                        |
